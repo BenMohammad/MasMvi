@@ -1,20 +1,35 @@
 package com.benmohammad.masmvi.basic.components.uiViews
 
+import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import com.benmohammad.componentization.EventBusFactory
 import com.benmohammad.componentization.UIView
+import com.benmohammad.masmvi.R
 import com.benmohammad.masmvi.basic.eventTypes.UserInteractionEvent
 
 class ErrorView(container: ViewGroup, eventBusFactory: EventBusFactory): UIView<UserInteractionEvent>(container) {
 
-    override val containerId: Int
-        get() = TODO("Not yet implemented")
+    private val view: View = LayoutInflater.from(container.context).inflate(R.layout.error, container, true)
+        .findViewById(R.id.error_container)
+
+    override val containerId: Int = 0
+
+    init {
+        view.findViewById<Button>(R.id.button)
+            .setOnClickListener{
+                eventBusFactory.emit(
+                    UserInteractionEvent::class.java,
+                    UserInteractionEvent.IntentTapRetry)
+            }
+    }
 
     override fun show() {
-        TODO("Not yet implemented")
+        view.visibility = View.VISIBLE
     }
 
     override fun hide() {
-        TODO("Not yet implemented")
+        view.visibility = View.GONE
     }
 }
